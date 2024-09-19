@@ -1,0 +1,11 @@
+services:
+  sdn_nfv_env:
+    build: .
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    entrypoint: /bin/bash -ic "/usr/local/share/openvswitch/scripts/ovs-ctl start && cd ~/onos/ && bazel run onos-local -- clean debug"
